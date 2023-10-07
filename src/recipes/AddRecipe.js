@@ -13,11 +13,11 @@ const [recipe, setRecipe] = useState({
     time:"",
     calories:"",
     instructions:"",
-    ingredients:"",
+    recipeIngredientList:"",
     createdBy:""
 })
 
-const{name,cuisine,spice,time,calories,instructions,ingredients,createdBy} = recipe
+const{name,cuisine,spice,time,calories,instructions,recipeIngredientList,createdBy} = recipe
 
 const onInputChanges=(e)=>{
     setRecipe({...recipe,[e.target.name]:e.target.value})
@@ -25,14 +25,14 @@ const onInputChanges=(e)=>{
 
 const onSubmit=async(e)=>{
     e.preventDefault();
-    const ings  = recipe.ingredients.split(",");
+    const ings  = recipe.recipeIngredientList.split(",");
       const splitStr = (x) =>{
         return {["ingredientName"]: x}
       }
 
       const objects = ings.map(splitStr);
       console.log(objects);
-    recipe.ingredients = objects;
+    recipe.recipeIngredientList = objects;
     await axios.post("http://localhost:8080/recipes/saveRecipe/",recipe)
     navigate("/");
 }
@@ -110,13 +110,13 @@ const onSubmit=async(e)=>{
                         />
                     </div>
                     <div className='text-left mb-3'>
-                        <label htmlFor="Ingredients" > Ingredients </label> 
+                        <label htmlFor="RecipeIngredientList" > Ingredients </label> 
                             <input
                             type={"text"}
                             className='form-control'
                             placeholder='Enter Ingredients(Ex: Onion, Pepper)'
-                            name="ingredients"
-                            value={ingredients}
+                            name="recipeIngredientList"
+                            value={recipeIngredientList}
                             onChange={(e)=>onInputChanges(e)}
                         />
                     </div>
